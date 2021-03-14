@@ -5,21 +5,22 @@ from psycopg2 import Error
 from flask import Flask, render_template
 
 app = Flask(__name__)
+connection = None
 
 def get_secret_file():
     #try to get the location from env variable, default is blank
     db_cred_location = os.environ.get('PY_DB_CRED_LOCATION', '')
     #credential file must be named secret
     #expecting user, and pass values in json
-    filepath = db_cred_location + "secret"
+    filepath = db_cred_location + "creds.json"
 
     #secret file must be json
     file = open(filepath , "r")
     filecontent = json.load(file)
     return filecontent
 
-
-def connect_to_db(filecontent):    
+def connect_to_db(filecontent):
+    global connection    
     #get these details from env when running in k8s vs local
     db_name = os.environ.get('PY_APP_DB_NAME', 'postgres')
     db_host = os.environ.get('PY_APP_DB_HOST', '127.0.0.1')
@@ -33,7 +34,6 @@ def connect_to_db(filecontent):
     db_details.append(db_username)
     db_details.append(db_password)
     db_details.append(db_name)
-
     try:
         # Connect to an existing database
         connection = psycopg2.connect(user=db_username,

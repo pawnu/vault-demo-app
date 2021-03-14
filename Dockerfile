@@ -15,7 +15,7 @@ RUN \
  apk --purge del .build-deps
  
 USER app-user
-COPY . /home/app-user/pythonapp
+COPY --chown=app-user:pywebapp . /home/app-user/pythonapp
 WORKDIR /home/app-user/pythonapp
 
 ENTRYPOINT [ "python3" ]
