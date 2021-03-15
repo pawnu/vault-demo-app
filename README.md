@@ -11,7 +11,7 @@ This demo app is to show static and dynamic database credentials created by vaul
 `PY_APP_DB_PORT` - port database is listening to, default is `5432`
 
 
-Inject the secret into the app's pod with annotation like this
+Inject the dynamic secret into the app's pod with annotation like this
 ```
       annotations:     
         vault.hashicorp.com/agent-inject: "true"
