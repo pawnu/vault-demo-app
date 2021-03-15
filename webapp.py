@@ -10,7 +10,7 @@ connection = None
 def get_secret_file():
     #try to get the location from env variable, default is blank
     db_cred_location = os.environ.get('PY_DB_CRED_LOCATION', '')
-    #credential file must be named secret
+    #credential file must be creds.json
     #expecting user, and pass values in json
     filepath = db_cred_location + "creds.json"
 
@@ -28,8 +28,7 @@ def connect_to_db(filecontent):
 
     db_username = filecontent["user"]
     db_password = filecontent["pass"]
-    print("username: " + db_username)
-    print("passwword: " + db_password)
+
     db_details = []
     db_details.append(db_username)
     db_details.append(db_password)
